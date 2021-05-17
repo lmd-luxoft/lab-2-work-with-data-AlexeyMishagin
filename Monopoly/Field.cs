@@ -5,11 +5,11 @@ namespace Monopoly
     class Field
     {
         private string name;
-        private Type type;
+        private Monopoly.Type type;
         private Player player;
         private bool sale;
 
-        public Field (string name, Type type, Player player, bool sale)
+        public Field (string name, Monopoly.Type type, Player player, bool sale)
         {
             this.name = name;
             this.type = type;

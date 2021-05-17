@@ -1,6 +1,6 @@
 ﻿namespace Monopoly
 {
-    class Player
+    internal class Player
     {
         private string name;
         private int cash;

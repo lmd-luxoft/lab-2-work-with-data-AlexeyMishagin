@@ -9,7 +9,7 @@ namespace Monopoly
     class Monopoly
     {
         private List<Player> players = new List<Player>();
-        private List<Tuple<string, Monopoly.Type, int, bool>> fields = new List<Tuple<string, Type, int, bool>>();
+        private List<Field> fields = new List<Field>();
         public Monopoly(string[] p, int v)
         {
             //for (int i = 0; i < p.Length; i++)
@@ -22,14 +22,14 @@ namespace Monopoly
                 players.Add(new Player(pl, 6000));
             }
 
-            fields.Add(new Tuple<string, Monopoly.Type, int, bool>("Ford", Monopoly.Type.AUTO, 0, false));
-            fields.Add(new Tuple<string, Monopoly.Type, int, bool>("MCDonald", Monopoly.Type.FOOD, 0, false));
-            fields.Add(new Tuple<string, Monopoly.Type, int, bool>("Lamoda", Monopoly.Type.CLOTHER, 0, false));
-            fields.Add(new Tuple<string, Monopoly.Type, int, bool>("Air Baltic", Monopoly.Type.TRAVEL, 0, false));
-            fields.Add(new Tuple<string, Monopoly.Type, int, bool>("Nordavia", Monopoly.Type.TRAVEL, 0, false));
-            fields.Add(new Tuple<string, Monopoly.Type, int, bool>("Prison", Monopoly.Type.PRISON, 0, false));
-            fields.Add(new Tuple<string, Monopoly.Type, int, bool>("MCDonald", Monopoly.Type.FOOD, 0, false));
-            fields.Add(new Tuple<string, Monopoly.Type, int, bool>("TESLA", Monopoly.Type.AUTO, 0, false));
+            fields.Add(new Field("Ford", Monopoly.Type.AUTO, 0, false));
+            fields.Add(new Field("MCDonald", Monopoly.Type.FOOD, 0, false));
+            fields.Add(new Field("Lamoda", Monopoly.Type.CLOTHER, 0, false));
+            fields.Add(new Field("Air Baltic", Monopoly.Type.TRAVEL, 0, false));
+            fields.Add(new Field("Nordavia", Monopoly.Type.TRAVEL, 0, false));
+            fields.Add(new Field("Prison", Monopoly.Type.PRISON, 0, false));
+            fields.Add(new Field("MCDonald", Monopoly.Type.FOOD, 0, false));
+            fields.Add(new Field("TESLA", Monopoly.Type.AUTO, 0, false));
         }
 
         internal List<Player> GetPlayersList()
@@ -47,42 +47,42 @@ namespace Monopoly
             BANK
         }
 
-        internal List<Tuple<string, Monopoly.Type, int, bool>> GetFieldsList()
+        internal List<Field> GetFieldsList()
         {
             return fields;
         }
 
-        internal Tuple<string, Type, int, bool> GetFieldByName(string v)
+        internal Field GetFieldByName(string v)
         {
-            return (from p in fields where p.Item1 == v select p).FirstOrDefault();
+            return (from p in fields where p.getName() == v select p).FirstOrDefault();
         }
 
-        internal bool Buy(int v, Tuple<string, Type, int, bool> k)
+        internal bool Buy(int v, Field k)
         {
             var x = GetPlayerInfo(v);
             int cash = 0;
-            switch(k.Item2)
+            switch(k.getTypeField())
             {
                 case Type.AUTO:
-                    if (k.Item3 != 0)
+                    if (k.getPlayer() != 0)
                         return false;
                     cash = x.getCash() - 500;
                     players[v - 1] = new Player(x.getName(), cash);
                     break;
                 case Type.FOOD:
-                    if (k.Item3 != 0)
+                    if (k.getPlayer() != 0)
                         return false;
                     cash = x.getCash() - 250;
                     players[v - 1] = new Player(x.getName(), cash);
                     break;
                 case Type.TRAVEL:
-                    if (k.Item3 != 0)
+                    if (k.getPlayer() != 0)
                         return false;
                     cash = x.getCash() - 700;
                     players[v - 1] = new Player(x.getName(), cash);
                     break;
                 case Type.CLOTHER:
-                    if (k.Item3 != 0)
+                    if (k.getPlayer() != 0)
                         return false;
                     cash = x.getCash() - 100;
                     players[v - 1] = new Player(x.getName(), cash);
@@ -93,7 +93,7 @@ namespace Monopoly
             int i = players.Select((item, index) => new { name = item.getName(), index = index })
                 .Where(n => n.name == x.getName())
                 .Select(p => p.index).FirstOrDefault();
-            fields[i] = new Tuple<string, Type, int, bool>(k.Item1, k.Item2, v, k.Item4);
+            fields[i] = new Field(k.getName(), k.getTypeField(), v, k.getSale());
              return true;
         }
 
@@ -102,38 +102,38 @@ namespace Monopoly
             return players[v - 1];
         }
 
-        internal bool Renta(int v, Tuple<string, Type, int, bool> k)
+        internal bool Renta(int v, Field k)
         {
             var z = GetPlayerInfo(v);
             Player o = null;
-            switch(k.Item2)
+            switch(k.getTypeField())
             {
                 case Type.AUTO:
-                    if (k.Item3 == 0)
+                    if (k.getPlayer() == 0)
                         return false;
-                    o =  GetPlayerInfo(k.Item3);
+                    o =  GetPlayerInfo(k.getPlayer());
                     z = new Player(z.getName(), z.getCash() - 250);
                     o = new Player(o.getName(),o.getCash() + 250);
                     break;
                 case Type.FOOD:
-                    if (k.Item3 == 0)
+                    if (k.getPlayer() == 0)
                         return false;
-                    o = GetPlayerInfo(k.Item3);
+                    o = GetPlayerInfo(k.getPlayer());
                     z = new Player(z.getName(), z.getCash() - 250);
                     o = new Player(o.getName(), o.getCash() + 250);
 
                     break;
                 case Type.TRAVEL:
-                    if (k.Item3 == 0)
+                    if (k.getPlayer() == 0)
                         return false;
-                    o = GetPlayerInfo(k.Item3);
+                    o = GetPlayerInfo(k.getPlayer());
                     z = new Player(z.getName(), z.getCash() - 300);
                     o = new Player(o.getName(), o.getCash() + 300);
                     break;
                 case Type.CLOTHER:
-                    if (k.Item3 == 0)
+                    if (k.getPlayer() == 0)
                         return false;
-                    o = GetPlayerInfo(k.Item3);
+                    o = GetPlayerInfo(k.getPlayer());
                     z = new Player(z.getName(), z.getCash() - 100);
                     o = new Player(o.getName(), o.getCash() + 1000);
 
@@ -149,7 +149,7 @@ namespace Monopoly
             }
             players[v - 1] = z;
             if(o != null)
-                players[k.Item3 - 1] = o;
+                players[k.getPlayer() - 1] = o;
             return true;
         }
     }

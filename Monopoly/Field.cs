@@ -2,14 +2,24 @@
 
 namespace Monopoly
 {
-    class Field
+    internal class Field
     {
         private string name;
         private Monopoly.Type type;
-        private Player player;
+        private int player;
         private bool sale;
 
-        public Field (string name, Monopoly.Type type, Player player, bool sale)
+        public enum TypeField
+        {
+            AUTO,
+            FOOD,
+            CLOTHER,
+            TRAVEL,
+            PRISON,
+            BANK
+        }
+
+        public Field (string name, Monopoly.Type type, int player, bool sale)
         {
             this.name = name;
             this.type = type;
@@ -20,6 +30,21 @@ namespace Monopoly
         public string getName()
         {
             return name;
+        }
+
+        public Monopoly.Type getTypeField()
+        {
+            return type;
+        }
+
+        public int getPlayer()
+        {
+            return player;
+        }
+
+        public bool getSale()
+        {
+            return sale;
         }
 
         public override bool Equals(object other)

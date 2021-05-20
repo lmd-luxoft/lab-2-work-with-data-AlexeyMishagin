@@ -21,7 +21,7 @@ namespace Monopoly
                 new Player("Alexander",6000)
             };
 
-            Monopoly monopoly = new Monopoly(players,3);
+            Monopoly monopoly = new Monopoly(players);
             Player[] actualPlayers = monopoly.GetPlayersList().ToArray();
 
             //Assert.AreEqual()
@@ -42,7 +42,7 @@ namespace Monopoly
                 new Field("TESLA",Monopoly.Type.AUTO,0,false)
             };
             string[] players = new string[] { "Peter", "Ekaterina", "Alexander" };
-            Monopoly monopoly = new Monopoly(players, 3);
+            Monopoly monopoly = new Monopoly(players);
             Field[] actualCompanies = monopoly.GetFieldsList().ToArray();
             Assert.AreEqual(expectedCompanies, actualCompanies);
         }
@@ -50,7 +50,7 @@ namespace Monopoly
         public void PlayerBuyNoOwnedCompanies()
         {
             string[] players = new string[] { "Peter", "Ekaterina", "Alexander" };
-            Monopoly monopoly = new Monopoly(players, 3);
+            Monopoly monopoly = new Monopoly(players);
             Field x = monopoly.GetFieldByName("Ford");
             monopoly.Buy(1, x);
             Player actualPlayer = monopoly.GetPlayerInfo(1);
@@ -63,7 +63,7 @@ namespace Monopoly
         public void RentaShouldBeCorrectTransferMoney()
         {
             string[] players = new string[] { "Peter", "Ekaterina", "Alexander" };
-            Monopoly monopoly = new Monopoly(players, 3);
+            Monopoly monopoly = new Monopoly(players);
             Field  x = monopoly.GetFieldByName("Ford");
             monopoly.Buy(1, x);
             x = monopoly.GetFieldByName("Ford");

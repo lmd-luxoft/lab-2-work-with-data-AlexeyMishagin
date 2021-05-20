@@ -21,10 +21,24 @@
             return cash;
         }
 
+        public void setCash(int cash)
+        {
+            this.cash = cash;
+        }
+
+        public void MinusCash(int cash)
+        {
+            this.cash -= cash;
+        }
+
+        public void PlusCash(int cash)
+        {
+            this.cash += cash;
+        }
+
         public override bool Equals(object other)
         {
-            Player toCompareWith = other as Player;
-            if (toCompareWith == null)
+            if (!(other is Player toCompareWith))
                 return false;
             return this.name == toCompareWith.name &&
                 this.cash == toCompareWith.cash;

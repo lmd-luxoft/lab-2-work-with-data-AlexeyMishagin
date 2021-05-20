@@ -9,16 +9,6 @@ namespace Monopoly
         private int player;
         private bool sale;
 
-        public enum TypeField
-        {
-            AUTO,
-            FOOD,
-            CLOTHER,
-            TRAVEL,
-            PRISON,
-            BANK
-        }
-
         public Field (string name, Monopoly.Type type, int player, bool sale)
         {
             this.name = name;
@@ -49,8 +39,7 @@ namespace Monopoly
 
         public override bool Equals(object other)
         {
-            Field toCompareWith = other as Field;
-            if (toCompareWith == null)
+            if (!(other is Field toCompareWith))
                 return false;
             return this.name == toCompareWith.name 
                 && this.type == toCompareWith.type

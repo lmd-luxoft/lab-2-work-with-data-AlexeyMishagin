@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,7 @@ namespace Monopoly
     {
         private List<Player> players = new List<Player>();
         private List<Field> fields = new List<Field>();
-        public Monopoly(string[] p, int v)
+        public Monopoly(string[] p)
         {
             //for (int i = 0; i < p.Length; i++)
             //{
@@ -47,6 +48,20 @@ namespace Monopoly
             BANK
         }
 
+        internal int GetPriceOfField(Monopoly.Type type)
+        {
+            switch (type)
+            {
+                case Monopoly.Type.AUTO: return 500;
+                case Monopoly.Type.FOOD: return 250;
+                case Monopoly.Type.TRAVEL: return 700;
+                case Monopoly.Type.CLOTHER: return 100;
+                case Monopoly.Type.PRISON: return 1000;
+                case Monopoly.Type.BANK: return 700;
+            }
+            return 0;
+        }
+
         internal List<Field> GetFieldsList()
         {
             return fields;
@@ -67,6 +82,7 @@ namespace Monopoly
                     if (k.getPlayer() != 0)
                         return false;
                     cash = x.getCash() - 500;
+                    //players[v - 1].MinusCash(GetPriceOfField(k.getTypeField()));
                     players[v - 1] = new Player(x.getName(), cash);
                     break;
                 case Type.FOOD:
@@ -90,7 +106,7 @@ namespace Monopoly
                 default:
                     return false;
             }
-            int i = players.Select((item, index) => new { name = item.getName(), index = index })
+            int i = players.Select((item, index) => new { name = item.getName(), index })
                 .Where(n => n.name == x.getName())
                 .Select(p => p.index).FirstOrDefault();
             fields[i] = new Field(k.getName(), k.getTypeField(), v, k.getSale());

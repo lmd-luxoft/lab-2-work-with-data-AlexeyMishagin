@@ -36,6 +36,11 @@ namespace Monopoly
             return type;
         }
 
+        protected void setType(Monopoly.Type type)
+        {
+            this.type = type;
+        }
+
         public int getNumPlayer()
         {
             return numplayer;
@@ -74,6 +79,15 @@ namespace Monopoly
         public bool IsCanBuyField()
         {
             if (forsale == true && numplayer == 0)
+                return true;
+            return false;
+        }
+
+        public bool IsCanRentaField()
+        {
+            if (forsale == false)
+                return true;
+            if (forsale == true && numplayer != 0)
                 return true;
             return false;
         }

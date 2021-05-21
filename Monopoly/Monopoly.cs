@@ -55,7 +55,7 @@ namespace Monopoly
 
         internal Field GetFieldByName(string v)
         {
-            return (from p in fields where p.getName() == v select p).FirstOrDefault();
+            return (from p in fields where p.getName() == v select p).First();
         }
 
         internal bool Buy(int numPlayer, Field field)
@@ -78,33 +78,28 @@ namespace Monopoly
         {
             var z = GetPlayerInfo(numPlayer);
             Player o = null;
+
+            if (!field.IsCanRentaField())
+                return false;
+
             switch(field.getTypeField())
             {
                 case Type.AUTO:
-                    if (field.getNumPlayer() == 0)
-                        return false;
                     o =  GetPlayerInfo(field.getNumPlayer());
                     z = new Player(z.getName(), z.getCash() - 250);
                     o = new Player(o.getName(),o.getCash() + 250);
                     break;
                 case Type.FOOD:
-                    if (field.getNumPlayer() == 0)
-                        return false;
                     o = GetPlayerInfo(field.getNumPlayer());
                     z = new Player(z.getName(), z.getCash() - 250);
                     o = new Player(o.getName(), o.getCash() + 250);
-
                     break;
                 case Type.TRAVEL:
-                    if (field.getNumPlayer() == 0)
-                        return false;
                     o = GetPlayerInfo(field.getNumPlayer());
                     z = new Player(z.getName(), z.getCash() - 300);
                     o = new Player(o.getName(), o.getCash() + 300);
                     break;
                 case Type.CLOTHER:
-                    if (field.getNumPlayer() == 0)
-                        return false;
                     o = GetPlayerInfo(field.getNumPlayer());
                     z = new Player(z.getName(), z.getCash() - 100);
                     o = new Player(o.getName(), o.getCash() + 100);

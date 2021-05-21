@@ -46,6 +46,16 @@ namespace Monopoly
             Field[] actualCompanies = monopoly.GetFieldsList().ToArray();
             Assert.AreEqual(expectedCompanies, actualCompanies);
         }
+
+        [Test]
+        public void GetFieldsTypeFoodCorrect()
+        {
+            string[] players = new string[] { "Peter", "Ekaterina", "Alexander" };
+            Monopoly monopoly = new Monopoly(players);
+            Field actualField = monopoly.GetFieldByName("MCDonald");
+            Assert.AreEqual(Monopoly.Type.FOOD, actualField.getTypeField());
+        }
+
         [Test]
         public void PlayerBuyAutoNoOwnedCompanies()
         {
@@ -115,6 +125,17 @@ namespace Monopoly
             Assert.AreEqual(5750, player1.getCash());
             Player player2 = monopoly.GetPlayerInfo(2);
             Assert.AreEqual(5750, player2.getCash());
+        }
+
+        [Test]
+        public void RentaPrisonShouldBeCorrect()
+        {
+            string[] players = new string[] { "Peter", "Ekaterina", "Alexander" };
+            Monopoly monopoly = new Monopoly(players);
+            Field x = monopoly.GetFieldByName("Prison");
+            monopoly.Renta(2, x);
+            Player player2 = monopoly.GetPlayerInfo(2);
+            Assert.AreEqual(5000, player2.getCash(), "" + x.getName() + x.getNumPlayer() + x.getTypeField() + "|" + player2.getName());
         }
 
         [Test]

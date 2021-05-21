@@ -32,14 +32,14 @@ namespace Monopoly
         {
             Field[] expectedCompanies = 
                 new Field[]{
-                new FieldAuto("Ford",0,false),
-                new FieldFood("MCDonald", 0, false),
-                new FieldClother("Lamoda", 0, false),
-                new FieldTravel("Air Baltic",0,false),
-                new FieldTravel("Nordavia",0,false),
+                new FieldAuto("Ford",0,true),
+                new FieldFood("MCDonald", 0, true),
+                new FieldClother("Lamoda", 0, true),
+                new FieldTravel("Air Baltic",0,true),
+                new FieldTravel("Nordavia",0,true),
                 new FieldPrison("Prison",0,false),
-                new FieldFood("MCDonald",0,false),
-                new FieldAuto("TESLA",0,false)
+                new FieldFood("MCDonald",0,true),
+                new FieldAuto("TESLA",0,true)
             };
             string[] players = new string[] { "Peter", "Ekaterina", "Alexander" };
             Monopoly monopoly = new Monopoly(players);

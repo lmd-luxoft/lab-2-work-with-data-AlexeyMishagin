@@ -7,23 +7,23 @@ namespace Monopoly
         private string name;
         private Monopoly.Type type;
         private int numplayer;
-        private bool sale;
+        private bool forsale;
         private int price = 0;
         private int renta = 0;
 
-        public Field (string name, Monopoly.Type type, int numplayer, bool sale)
+        public Field (string name, Monopoly.Type type, int numplayer, bool forsale)
         {
             this.name = name;
             this.type = type;
             this.numplayer = numplayer;
-            this.sale = sale;
+            this.forsale = forsale;
         }
 
-        public Field(string name, int numplayer, bool sale)
+        public Field(string name, int numplayer, bool forsale)
         {
             this.name = name;
             this.numplayer = numplayer;
-            this.sale = sale;
+            this.forsale = forsale;
         }
 
         public string getName()
@@ -48,7 +48,7 @@ namespace Monopoly
 
         public bool getSale()
         {
-            return sale;
+            return forsale;
         }
 
         public int getPrice()
@@ -71,6 +71,13 @@ namespace Monopoly
             this.renta = renta;
         }
 
+        public bool IsCanBuyField()
+        {
+            if (forsale == true && numplayer == 0)
+                return true;
+            return false;
+        }
+
         public override bool Equals(object other)
         {
             if (!(other is Field toCompareWith))
@@ -78,7 +85,7 @@ namespace Monopoly
             return this.name == toCompareWith.name 
                 && this.type == toCompareWith.type
                 && this.numplayer == toCompareWith.numplayer
-                && this.sale == toCompareWith.sale;
+                && this.forsale == toCompareWith.forsale;
         }
     }
 }

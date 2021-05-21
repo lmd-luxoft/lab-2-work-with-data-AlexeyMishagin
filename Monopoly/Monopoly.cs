@@ -18,14 +18,14 @@ namespace Monopoly
                 players.Add(new Player(pl, 6000));
             }
 
-            fields.Add(new FieldAuto("Ford", 0, false));
-            fields.Add(new FieldFood("MCDonald", 0, false));
-            fields.Add(new FieldClother("Lamoda", 0, false));
-            fields.Add(new FieldTravel("Air Baltic", 0, false));
-            fields.Add(new FieldTravel("Nordavia", 0, false));
+            fields.Add(new FieldAuto("Ford", 0, true));
+            fields.Add(new FieldFood("MCDonald", 0, true));
+            fields.Add(new FieldClother("Lamoda", 0, true));
+            fields.Add(new FieldTravel("Air Baltic", 0, true));
+            fields.Add(new FieldTravel("Nordavia", 0, true));
             fields.Add(new FieldPrison("Prison", 0, false));
-            fields.Add(new FieldFood("MCDonald", 0, false));
-            fields.Add(new FieldAuto("TESLA", 0, false));
+            fields.Add(new FieldFood("MCDonald", 0, true));
+            fields.Add(new FieldAuto("TESLA", 0, true));
         }
 
         internal List<Player> GetPlayersList()
@@ -60,43 +60,13 @@ namespace Monopoly
 
         internal bool Buy(int numPlayer, Field field)
         {
-            var player = GetPlayerInfo(numPlayer);
-
-            if (field.getNumPlayer() != 0)
+            if (!field.IsCanBuyField())
                 return false;
 
             players[numPlayer - 1].MinusCash(field.getPrice());
 
-            //switch (field.getTypeField())
-            //{
-            //    case Type.AUTO:
-            //        //cash = player.getCash() - field.getPrice();
-            //        //cash = x.getCash() - 500;
-            //        //players[v - 1].MinusCash(GetPriceOfField(k.getTypeField()));
-            //        //players[numPlayer - 1] = new Player(player.getName(), cash);
-            //        players[numPlayer - 1].MinusCash(field.getPrice());
-            //        break;
-            //    case Type.FOOD:
-            //        cash = player.getCash() - 250;
-            //        players[numPlayer - 1] = new Player(player.getName(), cash);
-            //        break;
-            //    case Type.TRAVEL:
-            //        cash = player.getCash() - 700;
-            //        players[numPlayer - 1] = new Player(player.getName(), cash);
-            //        break;
-            //    case Type.CLOTHER:
-            //        cash = player.getCash() - 100;
-            //        players[numPlayer - 1] = new Player(player.getName(), cash);
-            //        break;
-            //    default:
-            //        return false;
-            //}
-            //int i = fields.Select((item, index) => new { name = item.getName(), index })
-            //    .Where(n => n.name == player.getName())
-            //    .Select(p => p.index).FirstOrDefault();
-            //fields[i] = new Field(field.getName(), field.getTypeField(), numPlayer, field.getSale());
             field.setNumPlayer(numPlayer);
-             return true;
+            return true;
         }
 
         internal Player GetPlayerInfo(int v)

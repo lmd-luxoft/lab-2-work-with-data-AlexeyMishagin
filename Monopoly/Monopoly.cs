@@ -91,11 +91,11 @@ namespace Monopoly
             //    default:
             //        return false;
             //}
-            int i = fields.Select((item, index) => new { name = item.getName(), index })
-                .Where(n => n.name == player.getName())
-                .Select(p => p.index).FirstOrDefault();
-            fields[i] = new Field(field.getName(), field.getTypeField(), numPlayer, field.getSale());
-            //field.setPlayer(numPlayer);
+            //int i = fields.Select((item, index) => new { name = item.getName(), index })
+            //    .Where(n => n.name == player.getName())
+            //    .Select(p => p.index).FirstOrDefault();
+            //fields[i] = new Field(field.getName(), field.getTypeField(), numPlayer, field.getSale());
+            field.setNumPlayer(numPlayer);
              return true;
         }
 

@@ -48,11 +48,6 @@ namespace Monopoly
             return fields;
         }
 
-        internal Player GetPlayerByName(string v)
-        {
-            return (from p in players where p.getName() == v select p).FirstOrDefault();
-        }
-
         internal Field GetFieldByName(string v)
         {
             return (from p in fields where p.getName() == v select p).First();
@@ -76,46 +71,19 @@ namespace Monopoly
 
         internal bool Renta(int numPlayer, Field field)
         {
-            var z = GetPlayerInfo(numPlayer);
-            Player o = null;
+            var player = GetPlayerInfo(numPlayer);
 
             if (!field.IsCanRentaField())
                 return false;
 
-            switch(field.getTypeField())
+            player.MinusCash(field.getRenta());
+
+            if (field.IsRentaOwned())
             {
-                case Type.AUTO:
-                    o =  GetPlayerInfo(field.getNumPlayer());
-                    z = new Player(z.getName(), z.getCash() - 250);
-                    o = new Player(o.getName(),o.getCash() + 250);
-                    break;
-                case Type.FOOD:
-                    o = GetPlayerInfo(field.getNumPlayer());
-                    z = new Player(z.getName(), z.getCash() - 250);
-                    o = new Player(o.getName(), o.getCash() + 250);
-                    break;
-                case Type.TRAVEL:
-                    o = GetPlayerInfo(field.getNumPlayer());
-                    z = new Player(z.getName(), z.getCash() - 300);
-                    o = new Player(o.getName(), o.getCash() + 300);
-                    break;
-                case Type.CLOTHER:
-                    o = GetPlayerInfo(field.getNumPlayer());
-                    z = new Player(z.getName(), z.getCash() - 100);
-                    o = new Player(o.getName(), o.getCash() + 100);
-                    break;
-                case Type.PRISON:
-                    z = new Player(z.getName(), z.getCash() - 1000);
-                    break;
-                case Type.BANK:
-                    z = new Player(z.getName(), z.getCash() - 700);
-                    break;
-                default:
-                    return false;
+                Player ownField = GetPlayerInfo(field.getNumPlayer());
+                ownField.PlusCash(field.getRenta());
             }
-            players[numPlayer - 1] = z;
-            if(o != null)
-                players[field.getNumPlayer() - 1] = o;
+                
             return true;
         }
     }

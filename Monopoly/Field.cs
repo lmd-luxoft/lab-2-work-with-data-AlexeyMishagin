@@ -11,14 +11,6 @@ namespace Monopoly
         private int price = 0;
         private int renta = 0;
 
-        public Field (string name, Monopoly.Type type, int numplayer, bool forsale)
-        {
-            this.name = name;
-            this.type = type;
-            this.numplayer = numplayer;
-            this.forsale = forsale;
-        }
-
         public Field(string name, int numplayer, bool forsale)
         {
             this.name = name;
@@ -88,6 +80,13 @@ namespace Monopoly
             if (forsale == false)
                 return true;
             if (forsale == true && numplayer != 0)
+                return true;
+            return false;
+        }
+
+        public bool IsRentaOwned()
+        {
+            if (forsale == true && numplayer > 0)
                 return true;
             return false;
         }
